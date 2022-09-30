@@ -7,81 +7,63 @@ Write your code in this editor and press "Run" button to compile and execute it.
 *******************************************************************************/
 
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
+struct node {
+    int data;
+    struct node *next;
+    struct node *head;
+};
+struct node *temp , *newnode;
+head = 0;
 
-#define size 50
-char stack[size];
-char infix[size] , postfix[size];
-int top = -1;
-int j = 0;
-char push(char);
-char pop();
-int precedence(char infix);
-void intopost();
-char print();
+int insert();
+int del();
+int display();
 
 int main() {
-    
-    printf("Enter a Infix Expression: ");
-    gets(infix);
-    
-    intopost(infix);
-    print();
-    return 0;
-}
-int precedence(char infix){
-    switch(infix){
-        case '*': 
-        case '/':
-            return 2;
-            break;
-        case '+':
-        case '-': 
-            return 1;
-            break;
-        default: return 0; break;
-    }
-}
-void intopost(){
-    char symbol , next;
-    
-    for(int i = 0; i < strlen(infix); i++){
-        symbol = infix[i];
-        switch(symbol){
-            case '(': push(symbol);
-                    break;
-            case ')': while((next = pop()) != '('){
-                    postfix[j++] = next;
-                    }
-                    break;
-            case '+':
-            case '-':
-            case '*':
-            case '/':
-                if(stack[top] == -1 && precedence(stack[top]) >= precedence(symbol)){
-                    postfix[j++] = pop();
-                } else {
-                    push(symbol);
-                }
-            default: postfix[j++] = symbol;
+    int ch, pos;
+    while(1){
+        printf("-----------Operations of Linked List-----------\n");
+        printf("1. Insert\n");
+        printf("2. Delete\n");
+        printf("3. Display\n");
+        printf("4. Exit\n");
+        printf("Enter your Choice:\n");
+        scanf("%d" , &ch);
+        
+        switch(ch){
+            case 1:insert();
+                break;
+            case 2: del();
+                break;
+            case 3: display();
+            case 4: exit(0);
+            default: printf("Invalid Choice!");
         }
     }
-    while(stack[top] != -1){
-        postfix[j++] = pop();
-    } 
+ 
+    return 0;
 }
-char push(char symbol){
-    top++;
-    stack[top] = symbol;
-}
-char pop(){
-    postfix[j++] = stack[top];
-    top--;
-}
-char print(){
-    int i = 0;
-    while(postfix[i]){
-        printf("%c " , postfix[i++]);
+int insert(){
+    newnode = (struct node*)malloc(sizeof(struct node));
+    printf("Enter the data: \n");
+    scanf("%d" , &newnode -> data);
+    if(head == 0){
+        head = temp = newnode;
+    } else {
+        temp -> next = newnode;
+        temp = newnode;
+        temp -> next = 0;
     }
+    
+}
+int del(int pos){
+    
+}
+int display(){
+    temp = head;
+    while(temp != 0)
+    {
+        printf("%d" , temp -> data);
+        temp = temp -> next;
+     }
 }
